@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { SocketProvider } from './context/SocketContext'; 
+import { Toaster } from 'react-hot-toast'; 
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -16,32 +18,25 @@ function ProtectedRoute({ children }) {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-  path="/tickets/:id" 
-  element={
-    <ProtectedRoute>
-      <TicketDetails />
-    </ProtectedRoute>
-  } 
-/>
-          {/* Redirection par défaut */}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
-      </BrowserRouter>
+      <SocketProvider> {/* <-- On enveloppe ici */}
+        <Toaster position="top-right" reverseOrder={false} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route 
+              path="/dashboard" 
+              element={<ProtectedRoute><Dashboard /></ProtectedRoute>} 
+            />
+            <Route 
+              path="/tickets/:id" 
+              element={<ProtectedRoute><TicketDetails /></ProtectedRoute>} 
+            />
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </Routes>
+        </BrowserRouter>
+      </SocketProvider>
     </AuthProvider>
   );
 }
-
 export default App;
