@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import TicketDetails from './pages/TicketDetails';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Composant pour protéger les routes
 function ProtectedRoute({ children }) {
@@ -32,6 +33,14 @@ function App() {
               path="/tickets/:id" 
               element={<ProtectedRoute><TicketDetails /></ProtectedRoute>} 
             />
+            <Route 
+  path="/admin/stats" 
+  element={
+    <ProtectedRoute>
+      <AdminDashboard />
+    </ProtectedRoute>
+  } 
+/>
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </Routes>
         </BrowserRouter>

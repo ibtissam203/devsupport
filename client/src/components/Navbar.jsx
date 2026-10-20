@@ -23,6 +23,12 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
+               {/* 👇 Nouveau lien conditionnel */}
+                {(user.role === 'admin' || user.role === 'agent') && (
+                  <Link to="/admin/stats" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+                    Statistiques
+                  </Link>
+                )}
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
                     {user.name.charAt(0).toUpperCase()}
@@ -45,6 +51,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
+          
         </div>
       </div>
     </nav>
